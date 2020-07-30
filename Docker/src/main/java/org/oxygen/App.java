@@ -7,6 +7,8 @@ import com.github.dockerjava.transport.DockerHttpClient;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.Matchers;
 
+import java.nio.charset.Charset;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -27,7 +29,8 @@ public class App {
 
         try (DockerHttpClient.Response response = client.execute( request )) {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
-            assertThat(IOUtils.toString(response.getBody()), equalTo("OK"));
+            assertThat(IOUtils.toString(response.getBody(), Charset.defaultCharset()), equalTo("OK"));
+            System.out.println(IOUtils.toString( response.getBody(), Charset.defaultCharset() ));
         } catch (Exception e) {
             e.printStackTrace();
         }
