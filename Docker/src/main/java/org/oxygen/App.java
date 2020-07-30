@@ -6,7 +6,7 @@ import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.Matchers;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.nio.charset.Charset;
 
@@ -30,9 +30,11 @@ public class App {
         try (DockerHttpClient.Response response = client.execute( request )) {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
             String a = IOUtils.toString( response.getBody(), Charset.defaultCharset() );
-            JSONObject jsonObject = new JSONObject(a);
-            System.out.println( "Id = " + jsonObject.get( "Id" ) );
-            System.out.println("Names = " + jsonObject.get( "Names" ));
+            JSONArray jsonArray = new JSONArray(a);
+            for(int  i = 0; i < jsonArray.length(); i++) {
+                System.out.println( "Id: " + jsonArray.getJSONObject( i ).get( "Id" ) );
+                System.out.println("Names: " + jsonArray.getJSONObject( i ).get( "Names" ));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
