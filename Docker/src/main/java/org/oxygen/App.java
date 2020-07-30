@@ -31,6 +31,7 @@ public class App {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
             String a = IOUtils.toString( response.getBody(), Charset.defaultCharset() );
             assertThat(a, equalTo("OK"));
+            System.out.println(a);
         } catch (Exception e) {
             e.printStackTrace();
         }
