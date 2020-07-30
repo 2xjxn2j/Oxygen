@@ -1,5 +1,5 @@
 # Default ignored files
-../Docker/target
+/Docker/target
 /shelf/
 /workspace.xml
 
