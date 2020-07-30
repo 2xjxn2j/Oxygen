@@ -29,8 +29,8 @@ public class App {
 
         try (DockerHttpClient.Response response = client.execute( request )) {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
-            assertThat(IOUtils.toString(response.getBody(), Charset.defaultCharset()), equalTo("OK"));
-            System.out.println(IOUtils.toString( response.getBody(), Charset.defaultCharset() ));
+            String a = IOUtils.toString( response.getBody(), Charset.defaultCharset() );
+            assertThat(a, equalTo("OK"));
         } catch (Exception e) {
             e.printStackTrace();
         }
