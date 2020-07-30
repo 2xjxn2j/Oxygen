@@ -6,10 +6,10 @@ import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.github.dockerjava.transport.DockerHttpClient;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.Matchers;
+import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class App {
@@ -24,14 +24,15 @@ public class App {
 
         DockerHttpClient.Request request = DockerHttpClient.Request.builder()
                 .method(DockerHttpClient.Request.Method.GET)
-                .path("/_ping")
+                .path("/containers/json")
                 .build();
 
         try (DockerHttpClient.Response response = client.execute( request )) {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
             String a = IOUtils.toString( response.getBody(), Charset.defaultCharset() );
-            assertThat(a, equalTo("OK"));
-            System.out.println(a);
+            JSONObject jsonObject = new JSONObject(a);
+            System.out.println( "Id = " + jsonObject.get( "Id" ) );
+            System.out.println("Names = " + jsonObject.get( "Names" ));
         } catch (Exception e) {
             e.printStackTrace();
         }
