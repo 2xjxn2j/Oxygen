@@ -31,9 +31,16 @@ public class App {
             assertThat(response.getStatusCode(), Matchers.equalTo(200));
             String a = IOUtils.toString( response.getBody(), Charset.defaultCharset() );
             JSONArray jsonArray = new JSONArray(a);
-            for(int  i = 0; i < jsonArray.length(); i++) {
+
+            int i;
+
+            for(i = 0; i < jsonArray.length(); i++) {
                 System.out.println( "Id: " + jsonArray.getJSONObject( i ).get( "Id" ) );
                 System.out.println("Names: " + jsonArray.getJSONObject( i ).get( "Names" ));
+            }
+
+            if(i == 0) {
+                System.out.println("No docker containers found");
             }
         } catch (Exception e) {
             e.printStackTrace();
